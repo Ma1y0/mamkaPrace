@@ -1,5 +1,4 @@
 import os
-import sys
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
 
@@ -12,8 +11,8 @@ class ExcelFileSelector:
     def __init__(self, root):
         self.root = root
         self.root.title("Výběr Excel souborů")
-        self.root.geometry("600x400")
-        self.root.minsize(500, 300)
+        self.root.geometry("750x900")
+        self.root.minsize(750, 900)
 
         self.selected_files = []
 

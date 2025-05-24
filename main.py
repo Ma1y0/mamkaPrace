@@ -33,7 +33,7 @@ class ExcelFileSelector:
 
         # Instructions label
         instructions = ctk.CTkLabel(
-            self.root, text="Vyberte jeden nebo více Excel souborů (*.xlsx, *.xls)", font=label_font
+            self.root, text="Vyberte jeden nebo více Excel souborů (*.xls)", font=label_font
         )
         instructions.pack(pady=10)
 
@@ -84,7 +84,7 @@ class ExcelFileSelector:
 
     def select_files(self):
         file_types = [
-            ("Excel soubory", "*.xlsx *.xls"),
+            ("Excel soubory", "*.xls"),
         ]
         new_files = filedialog.askopenfilenames(
             title="Vyberte Excel soubory", filetypes=file_types
@@ -96,7 +96,6 @@ class ExcelFileSelector:
             self.update_listbox()
 
     def remove_selected(self):
-        """Odebere poslední soubor ze seznamu (CTkTextbox není vybíratelný)"""
         if self.selected_files:
             self.selected_files.pop()
             self.update_listbox()

@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+from typing import Union
 import pandas as pd # type: ignore
 
 
@@ -13,7 +14,7 @@ def resource_path(relative_path):
 
 
 def transform_table(
-    data: Path, stations_path: Path = None
+    data: Path, stations_path: Union[Path, None] = None
 ) -> pd.DataFrame:
     if stations_path is None:
         stations_path = resource_path("Seznam ČS_1_5_2025.xlsx")
@@ -51,14 +52,14 @@ def transform_table(
     other_cols = [col for col in df.columns if col not in info_cols]
     df = df[info_cols + other_cols]
 
-    # Forward fill EAN and Název
-    for col in ["EAN", "Název"]:
-        if col in df.columns:
-            df[col] = df[col].ffill()
+    # Forward fill Název
+    df["Název"] = df["Název"].ffill()
+     # Then forward fill EAN within each Název group
+    df['EAN'] = df.groupby('Název')['EAN'].ffill()
 
     # Filter rows with both Množství and Částka
     filtered = df[df["Množství"].notna() & df["Částka"].notna()]
 
-    # Get the last row for each EAN group
-    sum_rows = filtered.groupby("EAN", as_index=False).tail(1).reset_index(drop=True)
+    # Get the last row for each Název group
+    sum_rows = filtered.groupby("Název", as_index=False).tail(1).reset_index(drop=True)
     return sum_rows

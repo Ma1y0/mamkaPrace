@@ -24,6 +24,9 @@
               tkinter
               customtkinter
               pyinstaller
+              jupyter-core
+              ipython
+	      notebook
             ]
           ))
         ];
